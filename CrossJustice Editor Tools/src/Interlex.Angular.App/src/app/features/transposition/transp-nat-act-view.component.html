@@ -1,0 +1,74 @@
+<p-card *ngIf="natAct" class="natAct-box">
+  <p-header>
+    <table>
+      <th>
+        <div class="p-col-10 natAct-label">
+          <div>
+            <label class="link label-inline bold">{{natAct.title}}</label>
+          </div>
+          <div>
+            <label class="link label-inline bold">{{natAct.titleEn}}</label>
+          </div>
+        </div>
+        <div class="p-col-2 natAct-edit-btns">
+          <button pButton type="button" (click)="editAct()" icon="pi pi-pencil" class="add-btn"
+                  [disabled]="!canEdit"></button>
+          <button pButton type="button" (click)="deleteAct(natAct)" icon="pi pi-trash" class="remove-btn"
+                  [disabled]="!canEdit"></button>
+        </div>
+      </th>
+      <tr class=" p-col-12">
+        <td class="p-col-2 add-provision-btn-box">
+          <button pButton label="Add Provision" (click)="showProvision()" icon="pi pi-plus" [disabled]="!canEdit"
+                  [style]="{'float':'right'}" class="add-provision-btn"></button>
+        </td>
+      </tr>
+    </table>
+  </p-header>
+
+  <ul *ngIf="natAct.provisions" class="list-act-provision">
+    <li *ngFor="let prov of natAct.provisions" class="natAct-list">
+      <div class="prov-box">
+        <label class="link label-inline">{{prov.link|natlinkPart}}<span
+          style="color:initial;"> - {{prov.implementationType.label}}</span></label>
+        <div class="provision-btn-set">
+          <button pButton type="button" (click)="editProvision(prov)" icon="pi pi-pencil"
+                  class="add-btn" [disabled]="!canEdit"></button>
+          <button pButton type="button" (click)="removeProvision(prov)" icon="pi pi-trash"
+                  class="remove-btn" [disabled]="!canEdit"></button>
+        </div>
+      </div>
+
+      <div class="textEn-box">
+        <div class="text-arrow-box">
+          <a (click)="showMore(prov)" *ngIf="prov.showMore !== true && prov.textEn?.length > length">
+            <i class="pi pi-chevron-down"></i></a>
+          <a (click)="showMore(prov)" *ngIf="prov.showMore === true && prov.textEn.length > length">
+            <i class="pi pi-chevron-up"></i></a>
+        </div>
+
+        <div class="text-textEn">
+          <a [innerHTML]="prov.textEn | slice:0:(prov.showMore === true ? prov.textEn.length : length)"></a>
+        </div>
+
+      </div>
+      <div *ngIf="prov.comment">
+        <label (click)=" displayComment(prov)" *ngIf="prov.comment !== ''" class="comment-button">
+          Comment</label>
+        <!-- <button type="button" (click)="displayComment(prov)" *ngIf="prov.comment !== ''" class="comment-button"
+        icon="pi pi-comments" class="comment-btn">Comment</button> -->
+        <p *ngIf="prov.showComment === true && prov.comment !== ''" class="comment-text"><span
+          [innerHTML]="prov.comment"></span></p>
+      </div>
+    </li>
+  </ul>
+</p-card>
+
+<p-dialog header="Add provision" [(visible)]="provisionVisible" [style]="{width: '700px'}"
+          [contentStyle]="{'overflow-y': 'auto', 'overflow-x': 'hidden',
+                           'max-height': '80vh','min-height':'250px'}">
+  <add-edit-provision [Provision]="tmpProvision" class="edit-provision-comp"></add-edit-provision>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="saveProvision()" label="Save"></button>
+  </p-footer>
+</p-dialog>

@@ -1,0 +1,118 @@
+<div [className]="isTransPage ? 'ui-g sticky-top-IE' : 'ui-g sticky-top'">
+  <!-- class="ui-g sticky-top" -->
+  <div class="ui-g-8">
+    <p-dropdown id="directive" [options]="directiveList" [(ngModel)]="selectedDirective" optionLabel="caption"
+                (onChange)="dropDownChange($event)">
+    </p-dropdown>
+
+    <p-dropdown id="language" [options]="countryList" optionLabel="title" [(ngModel)]="selectedCountry"
+                class="dd-left-padding" (onChange)="dropDownCountryChange($event)"></p-dropdown>
+
+    <button pButton type="button" (click)="saveTransposition()" label="Save table" class="sticky-top-save-btn"
+            [disabled]="!canEdit"></button>
+    <button *ngIf="!canEdit" pButton type="button" (click)="lockForEdit()" label="Lock for edit" class="sticky-top-save-btn"></button>
+    <button *ngIf="canEdit" pButton type="button" (click)="unlockTable()" label="Unlock table" class="sticky-top-save-btn"></button>
+    <button *ngIf="isAdmin" pButton type="button" (click)="unlockTable()" label="Admin unlock" class="sticky-top-save-btn"></button>
+  </div>
+
+  <h4>{{selectedDirective?.caption}}</h4>
+</div>
+
+<div [className]="isTransPage ? 'table-IE' : 'table'">
+  <p-table [value]="docItems">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Directive</th>
+        <!-- <th width="70px"></th> -->
+        <th>Transposition</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+      <tr [ngClass]="(item.colorId % 2) == 0 ? 'gray-background' : 'white-background'">
+        <td valign="top">
+          <div *ngIf="item.heading">
+            <b>{{item.heading}}</b><br/>
+            <b>{{item.subHeading}}</b></div>
+          <div [ngStyle]="{ 'padding-left': getLeftMargin(item)}"><span [innerHTML]="item.text"></span></div>
+        </td>
+        <!-- <td>
+          <p-inputSwitch title="HasTransposition"  binary="true" [(ngModel)]="item.hasTransposition"></p-inputSwitch>
+      </td> -->
+        <td class="transp-td">
+          <div class="trasp-items" *ngIf="item.type | diritemtrans">
+            <p-inputSwitch title="HasTransposition" binary="true" [(ngModel)]="item.hasTransposition"
+                           class="switch-transposition-btn"
+                           [disabled]="item.nationalActs?.length > 0 || item.comment?.length>0 || !canEdit">
+            </p-inputSwitch>
+            <div *ngIf="item.hasTransposition == true" class="transposition-settings">
+              <p-dropdown [options]="transTypes" [(ngModel)]="item.transp" class="select-transp"
+                          placeholder="Select transposition Type" (onClick)="dropDownClick(item)" [disabled]="!canEdit">
+              </p-dropdown>
+              <span *ngIf="item.transp">
+                <button *ngIf="item.transp.code !== '3'" pButton type="button"
+                        label="Add National act" [disabled]="!canEdit"
+                        (click)="showDialog(item)" icon="pi pi-plus" class="add-natAct-btn"></button>
+                  <button *ngIf="!item.comment" pButton type="button" label="Add Comment"
+                          (click)="showAddCommentDialog(item)" [disabled]="!canEdit"
+                          icon="pi pi-plus"
+                          class="add-natAct-btn"></button>
+              </span>
+            </div>
+          </div>
+          <p-card *ngIf="item.comment">
+            <div class="p-grid">
+              <div class="p-col-10" [innerHTML]="item.comment">
+              </div>
+              <div class="p-col-2 comment-btns">
+                <button pButton type="button" (click)="editComment(item)" icon="pi pi-pencil" class="edit-btn" [disabled]="!canEdit"></button>
+                <button pButton type="button" (click)="deleteComment(item)" icon="pi pi-trash" [disabled]="!canEdit"
+                        class="remove-btn"></button>
+              </div>
+            </div>
+          </p-card>
+          <div *ngIf="item.hasTransposition == true">
+            <div *ngIf="item?.nationalActs">
+              <table>
+                <tr *ngFor="let act of item?.nationalActs; index as natIndex">
+                  <td class="nat-act-box">
+                    <nat-act-view [NationalAct]="act" (removeNatAct)='removeAct(item, act)' [canEdit]="canEdit"
+                                  (editNatAct)="editAct(rowIndex, natIndex)">
+                    </nat-act-view>
+                  </td>
+
+                  <!-- <td class="btn-remove-act" >
+                    <button pButton type="button" (click)="removeAct(item, act)" icon="pi pi-trash"
+                        class="ui-button-danger"></button>
+                </td> -->
+                </tr>
+              </table>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+
+<p-dialog header="Add national act" [(visible)]="actVisible" [style]="{width: '700px'}" [modal]="true"
+          [contentStyle]="{'overflow':'visible', 'height':'700px', 'max-height':'700px'}">
+  <app-natlaw-link [showAdvanced]="false" [legislationDropdown]="legislationDropdown" [currentItem]="currentNatLawItem">
+  </app-natlaw-link>
+
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="saveNatActInfo()" label="Save"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Add comment" [(visible)]="showAddComment" [style]="{width: '700px'}" [modal]="true"
+          [contentStyle]="{'overflow':'visible', 'height':'700px', 'max-height':'700px'}">
+  <p-editor [(ngModel)]="comment" [style]="{'height':'320px'}">
+  </p-editor>
+
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="saveComment()" label="Save"></button>
+  </p-footer>
+</p-dialog>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

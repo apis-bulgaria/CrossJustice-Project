@@ -1,0 +1,184 @@
+/* You can add global styles to this file, and also import other style files */
+/*@import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');*/
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~primeicons/primeicons.css";
+@import "~primeng/resources/primeng.min.css";
+@import "~primeng/resources/themes/rhea/theme.css";
+@import "~primeflex/primeflex.css";
+
+* {
+  box-sizing: border-box;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+.ui-state-active {
+  background-color: whitesmoke;
+}
+
+.ql-editor{
+  font-size: 16px;
+}
+
+.star-red{
+    color: #e02365;
+    font-weight: bold;
+    vertical-align: top;
+    padding: 0;
+    margin-top: -3px;
+    margin-left: 3px;
+}
+
+.ui-inputswitch .ui-inputswitch-slider {
+    background: #E0E0E0 !important;
+}
+
+.ui-table .ui-table-caption {
+    border-bottom: 0 none;
+    font-weight: 700;
+    height: 50px;
+}
+
+.ui-splitbutton .ui-menu	.ui-menu-list	.ui-menuitem:first-child,
+.mobile-user-settings .ui-menu .ui-menuitem:first-child {
+ border-bottom: 1.5px solid #E0E0E0 !important;
+ border-radius: 0;
+}
+
+/*@font-face {*/
+  /*font-family: typewriter123;*/
+  /*font-style: normal;*/
+  /*src: url("/assets/fonts/typewriterbold.ttf") format("truetype");*/
+/*}*/
+
+.mobile-user-settings {
+  display: block !important;
+  float: right;
+}
+
+.sticky-top{
+  background: #b3dace;
+  border-bottom: 3px solid #7b95a3;
+  z-index: 1000;
+  top: 0;
+}
+.sticky-top-save-btn{
+  vertical-align: middle;
+  align-content: center;
+  margin-left: 10px !important;
+}
+
+.sticky-top h4{
+    margin: .4em 0;
+}
+
+.ui-menubar .ui-menubar-custom{
+  width: 60% !important;
+  padding: 0 .25em;
+}
+
+.header-rightpart{
+  width: 100%;
+}
+.logo-box{
+  width: 50%;
+  float: left;
+}
+
+.logo-box img{
+  width: 80px;
+  margin-top: 3px;
+}
+
+.user-settings-box{
+  padding: 0.5em;
+}
+
+.addBtn{
+  margin: 10px 20px !important;
+}
+
+.table td{
+  border-top: 0 none !important;
+
+}
+
+.ui-table .ui-table-tbody > tr > td{
+ word-break: normal;
+ overflow-wrap: break-word;
+ word-wrap: break-word;
+}
+
+
+/* MEDIA */
+@media screen and (max-width: 1600px) {
+  .ui-menubar .ui-menubar-custom{
+    width: 55% !important;
+  }
+}
+
+@media screen and (max-width: 1360px) {
+  .ui-menubar .ui-menubar-custom{
+    width: 50% !important;
+  }
+  .logo-box {
+    width: 55%;
+  }
+  .logo-box  h3 {
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .logo-box h3{
+    font-size: 1.5rem;
+  }
+  .ui-menubar-root-list{
+    font-size: 13.5px;
+  }
+  .ui-menubar .ui-menubar-custom{
+    width: 48% !important;
+  }
+}
+
+@media screen and (max-width: 1140px) {
+  .ui-menubar .ui-menubar-custom {
+      width: 38% !important;
+  }
+  .logo-box {
+    width: 85%;
+  }
+  .logo-box h3{
+     font-size: 1.4rem;
+  }
+}
+
+/* style for IE*/
+
+.sticky-top-IE{
+  position: fixed;
+  background: #b3dace;
+  border-bottom: 3px solid #7b95a3;
+  z-index: 100;
+  width: 100%;
+  margin-top: -2px;
+}
+
+.sticky-top-IE h4{
+  margin: .4em 0;
+}
+
+.header-menu-IE{
+  position: fixed;
+  width: 100%;
+  z-index: 105;
+}
+
+.table-IE{
+  padding-top: 50px;
+}
+.container-page-IE{
+  padding-top: 65px;
+}

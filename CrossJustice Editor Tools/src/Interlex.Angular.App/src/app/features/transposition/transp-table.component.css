@@ -1,0 +1,82 @@
+.dd-left-padding{
+    margin-left: 10px;
+}
+
+.trasp-items{
+    display: flex !important;
+    margin-bottom: 7px;
+}
+
+.nat-act-box{
+    width: 95.5%;
+}
+
+.switch-transposition-btn{
+    width: 45px;
+}
+
+.transposition-settings{
+    margin-left: 1em;
+    width: calc(100% - 45px);
+}
+
+.btn-remove-act{
+    vertical-align: top;
+}
+
+.comment-btns{
+  justify-content: flex-end;
+  display: flex;
+}
+/* .btn-remove-act > button{
+    width: 32px;
+    font-size: 13px;
+    margin-left: 7px;
+    color: #F44336;
+    background-color: #f0f8ff;
+    border: 1px solid #617c8a;
+} */
+
+::ng-deep .add-natAct-btn .ui-button-text{
+    padding: 0.45em 1em 0.45em 2em;
+}
+
+.add-natAct-btn{
+    float: right;
+    margin: 0;
+    color: #009688 !important;
+    background-color: transparent !important;
+    border: 0 none !important;
+}
+.gray-background{
+    background-color:rgb(246, 249, 250) !important;
+}
+.white-background{
+    background-color: white !important;
+}
+
+.edit-btn{
+  background: #fafafa;
+  color: #CA7957;
+  border: 1px solid #c8c8c8;
+  width: 2.357em;
+  height: 2.357em;
+}
+
+.remove-btn{
+  background: #fafafa;
+  color: #757575;
+  border: 1px solid #c8c8c8;
+  width: 2.357em;
+  height: 2.357em;
+}
+/*::ng-deep .ui-dropdown-item {*/
+/*  padding-top: 0 !important;*/
+/*  padding-bottom: 0 !important;*/
+/*}*/
+
+/*.dropdown-padding-fix {*/
+/*  padding-top: 0.429em;*/
+/*  padding-bottom: 0.429em;*/
+/*}*/
+

@@ -1,0 +1,37 @@
+<div class="p-col p-grid">
+    <div class="p-col-8 form-group add-edit-provision-box">
+        <div class="ui-inputgroup ui-g-12 edit-provision-grup">
+            <input type="text" pInputText [readonly]="true" placeholder="Enter transposing provision"
+                [ngModel]="provision.link|natlinkPart" (click)="showPartsDialog()" class="input-edit-provision">
+            <button pButton type="button" icon="pi pi-bars" class="ui-button-warn"
+                (click)="showPartsDialog()"></button>
+            <span class="star-red">*</span>
+        </div>
+
+    </div>
+
+    <div class="p-col-12 textEn-box">
+        <p class="bold"> Translation in English<span class="star-red">*</span> </p>
+        <p-editor id="textEn" name="textEn" autocomplete="off" [(ngModel)]="provision.textEn"
+            [style]="{'height':'150px'}">
+        </p-editor>
+    </div>
+    <div class="p-col-8">
+        <p class="bold"> Transposition level </p>
+        <p-dropdown [options]="implTypes" [(ngModel)]="provision.implementationType" class="edit-provision-dropdown"></p-dropdown>
+        <br />
+    </div>
+    <div class="p-col-12 authorComment-box">
+        <p class="bold"> Comment </p>
+        <p-editor id="authorComment" name="authorComment" [(ngModel)]="provision.comment" [style]="{'height':'150px'}">
+        </p-editor>
+    </div>
+
+    <p-dialog header="Enter transposing provision" [(visible)]="partVisible" [style]="{width: '400px'}"
+        [contentStyle]="{'overflow':'visible', 'height':'700px', 'max-height':'700px'}">
+        <add-edit-part [euLink]="tmpEuLink"></add-edit-part>
+        <p-footer>
+            <button type="button" pButton icon="pi pi-check" (click)="savePart()" label="Save"></button>
+        </p-footer>
+    </p-dialog>
+</div>

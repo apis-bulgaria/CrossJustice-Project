@@ -1,0 +1,789 @@
+<p-overlayPanel #previewOp [dismissable]="true" [showCloseIcon]="true">
+  <div [innerHTML]="previewHtmlContent"></div>
+</p-overlayPanel>
+<p-confirmDialog></p-confirmDialog>
+<div class="container">
+  <form #f="ngForm" (ngSubmit)="f.form.valid && submitForm(false)" novalidate>
+    <!-- " -->
+    <p></p>
+    <div class="form-group" style="border-bottom: 1px solid gray;" *ngIf="editable">
+      <span style="padding:10px 20px 0px 0px;">
+        <p-button type="button" icon="pi pi-save" label="Save"
+                  (click)="submitForm(false)"></p-button>
+      </span>
+      <!--      <span style="padding:10px 20px 0px 0px;" *ngIf="environment.hasPreview">-->
+      <!--        <p-button type="button" icon="pi pi-save" label="Preview HTML"-->
+      <!--                  (click)="previewHtml($event, previewOp)"></p-button>-->
+      <!--      </span>-->
+      <span style="padding:10px 20px 0px 100px;">
+        <p-button type="button" icon="pi pi-check" label="Save and close"
+                  (click)="submitForm(true)"></p-button>
+      </span>
+      <p></p>
+    </div>
+    <!--    <div class="form-group" style="border-bottom: 1px solid gray;" *ngIf="!editable && environment.hasPreview">-->
+    <!--      <span style="padding:10px 20px 0px 0px;">-->
+    <!--        <p-button type="button" icon="pi pi-save" label="Preview HTML"-->
+    <!--                  (click)="previewHtml($event, previewOp)"></p-button>-->
+    <!--      </span>-->
+    <!--      <p></p>-->
+    <!--    </div>-->
+    <div class="form-group">
+      <label for="jurisdiction">Country<span class="star-red">*</span></label>
+      <p-dropdown [options]="countries" id="jurisdiction" placeholder="Country / Jurisdiction" name="jurisdiction"
+                  [(ngModel)]="model.jurisdiction" optionLabel="label" [style]="{'width':'250px'}"
+                  (ngModelChange)="jurisdictionChange($event)"
+                  #jurisdiction="ngModel" [readonly]="!editable"
+                  required="true"></p-dropdown>
+      <div *ngIf="submitted && jurisdiction.invalid" class="alert alert-danger">
+        <div *ngIf="jurisdiction.errors.required">
+          Country / Jurisdiction is required.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="title">
+        Title<span class="star-red">*</span>
+        <i class="pi pi-info-circle" (mouseenter)="opTitle.show($event)" (mouseleave)="opTitle.hide()"></i>
+        <p-overlayPanel #opTitle [dismissable]="false">
+          <div style="width:500px;" class="overlay">
+            <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Provide here the full title of the national legislative instrument in the language in which the national legislative instrument was promulgated.
+              </span>
+            </p>
+            <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+                   style='background:#D9D9D9;border-collapse:collapse;border:none'>
+              <tr>
+                <td width=614 valign=top style='width:460.25pt;border:solid windowtext 1.0pt;
+                              padding:0cm 5.4pt 0cm 5.4pt'>
+                  <p class=MsoNormal style='margin-top:3.0pt;margin-right:0cm;margin-bottom:
+                              0cm;margin-left:0cm;margin-bottom:3.0pt;line-height:normal'>
+                    <b>
+                      <i>
+                        <span lang=EN-US style='font-size:9.0pt'>Example: </span>
+                      </i>
+                    </b><span lang=EN-US style='font-size:9.0pt'><i>codice di procedura penale</i></span>
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </p-overlayPanel>
+      </label>
+
+      <input type="text" pInputText id="title" name="title" [(ngModel)]="model.title" required class="form-control"
+             #title="ngModel" autocomplete="off" [readOnly]="!editable">
+      <div *ngIf="submitted && title.invalid" class="alert alert-danger">
+        <div *ngIf="title.errors.required">
+          Title is required.
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="titleEn">
+        Title in English<span class="star-red">*</span>
+        <i class="pi pi-info-circle" (mouseenter)="opTitleEn.show($event)" (mouseleave)="opTitleEn.hide()"></i>
+        <p-overlayPanel #opTitleEn [dismissable]="false">
+          <div style="width:500px;" class="overlay">
+            <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Provide here the translation in English of the full title of the national legislative instrument.
+              </span>
+            </p>
+            <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+                   style='background:#D9D9D9;border-collapse:collapse;border:none'>
+              <tr>
+                <td width=614 valign=top style='width:460.25pt;border:solid windowtext 1.0pt;
+                              padding:0cm 5.4pt 0cm 5.4pt'>
+                  <p class=MsoNormal style='margin-top:3.0pt;margin-right:0cm;margin-bottom:
+                              0cm;margin-left:0cm;margin-bottom:3.0pt;line-height:normal'>
+                    <b>
+                      <i>
+                        <span lang=EN-US style='font-size:9.0pt'>Example: </span>
+                      </i>
+                    </b><span lang=EN-US style='font-size:9.0pt'><i>Criminal Procedure Code</i></span>
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </p-overlayPanel>
+      </label>
+      <input type="text" pInputText id="titleEn" name="titleEn" [(ngModel)]="model.titleEn" class="form-control"
+             #titleEn="ngModel" autocomplete="off" [readOnly]="!editable">
+      <!--      <div *ngIf="submitted && titleEn.invalid" class="alert alert-danger">-->
+      <!--        <div *ngIf="titleEn.errors.required">-->
+      <!--          English title is required.-->
+      <!--        </div>-->
+      <!--      </div>-->
+    </div>
+    <div class="row">
+      <div class="form-group col-sm">
+        <label for="shortTitle">
+          Short title
+          <i class="pi pi-info-circle" (mouseenter)="opShortTitle.show($event)" (mouseleave)="opShortTitle.hide()"></i>
+          <p-overlayPanel #opShortTitle [dismissable]="false" [appendTo]="'body'">
+            <div style="width:500px;" class="overlay">
+              <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Provide here the short title of the national legislative instrument if there is an official one available. It should be provided in the language of the national legislative instrument.
+              </span>
+              </p>
+              <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+                     style='background:#D9D9D9;border-collapse:collapse;border:none'>
+                <tr>
+                  <td width=614 valign=top style='width:460.25pt;border:solid windowtext 1.0pt;
+                              padding:0cm 5.4pt 0cm 5.4pt'>
+                    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0cm;margin-bottom:
+                              0cm;margin-left:0cm;margin-bottom:3.0pt;line-height:normal'>
+                      <b>
+                        <i>
+                          <span lang=EN-US style='font-size:9.0pt'>Example: </span>
+                        </i>
+                      </b><span lang=EN-US style='font-size:9.0pt'><i>Europäisches Haftbefehlsgesetz</i></span>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </p-overlayPanel>
+        </label>
+        <input type="text" pInputText id="shortTitle" name="shortTitle" [(ngModel)]="model.shortTitle"
+               class="form-control" [readOnly]="!editable"
+               #shortTitle="ngModel" autocomplete="off">
+      </div>
+      <div class="form-group col-sm">
+        <label for="abbreviation">
+          Abbreviation
+          <i class="pi pi-info-circle" (mouseenter)="opAbbreviation.show($event)" (mouseleave)="opAbbreviation.hide()"></i>
+          <p-overlayPanel #opAbbreviation [dismissable]="false" [appendTo]="'body'">
+            <div style="width:500px;" class="overlay">
+              <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Provide here, if applicable, the abbreviation of the title of the national legislative instrument. It should be provided in the language of the national legislative instrument.
+              </span>
+              </p>
+              <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+                     style='background:#D9D9D9;border-collapse:collapse;border:none'>
+                <tr>
+                  <td width=614 valign=top style='width:460.25pt;border:solid windowtext 1.0pt;
+                              padding:0cm 5.4pt 0cm 5.4pt'>
+                    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0cm;margin-bottom:
+                              0cm;margin-left:0cm;margin-bottom:3.0pt;line-height:normal'>
+                      <b>
+                        <i>
+                          <span lang=EN-US style='font-size:9.0pt'>Examples: </span>
+                        </i>
+                      </b><span lang=EN-US style='font-size:9.0pt'><i>c.p.p. / StPO / НПК</i></span>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </p-overlayPanel>
+        </label>
+        <input type="text" pInputText id="abbreviation" name="abbreviation" [(ngModel)]="model.abbreviation"
+               class="form-control" [readOnly]="!editable"
+               #shortTitle="ngModel" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm form-group">
+        <label for="language">Language<span class="star-red">*</span>
+          <i class="pi pi-info-circle" (mouseenter)="opLang.show($event)" (mouseleave)="opLang.hide()"></i>
+          <p-overlayPanel #opLang [dismissable]="false" [appendTo]="'body'">
+            <div style="width:500px;" class="overlay">
+              <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Select from the drop-down list the language in which the national legislative instrument is published.
+              </span>
+              </p>
+            </div>
+          </p-overlayPanel>
+        </label>
+        <p-dropdown [options]="languages" id="language" name="language" [(ngModel)]="model.language"
+                    placeholder="Select a Language" [showClear]="false" [style]="{'width':'250px'}"
+                    optionLabel="label" [readonly]="!editable"
+                    required="true" #language="ngModel"></p-dropdown>
+        <!--        <div *ngIf="submitted && language.invalid" class="alert alert-danger">-->
+        <!--          <div *ngIf="language.errors.required">-->
+        <!--            Language is required.-->
+        <!--          </div>-->
+        <!--        </div>-->
+      </div>
+      <div class="col-sm form-group">
+        <label for="actType">
+          Act type<span class="star-red">*</span>
+          <i class="pi pi-info-circle" (mouseenter)="opActType.show($event)" (mouseleave)="opActType.hide()"></i>
+          <p-overlayPanel #opActType [dismissable]="false" [appendTo]="'body'">
+            <div style="width:500px;" class="overlay">
+              <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Select from the drop-down list the type of the national legislative instrument.
+              </span>
+              </p>
+            </div>
+          </p-overlayPanel>
+        </label>
+        <p-dropdown [options]="actTypes" id="actType" name="actType" [(ngModel)]="model.actType"
+                    placeholder="Select Act type" optionLabel="label" [showClear]="false"
+                    [style]="{'width':'300px'}" [readonly]="!editable"
+                    required="true" #actType="ngModel"></p-dropdown>
+        <!--        <div *ngIf="submitted && actType.invalid" class="alert alert-danger">-->
+        <!--          <div *ngIf="actType.errors.required">-->
+        <!--            Act type is required.-->
+        <!--          </div>-->
+        <!--        </div>-->
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="eli">
+        ELI (European Legislation Identifier)
+        <i class="pi pi-info-circle" (mouseenter)="opEli.show($event)" (mouseleave)="opEli.hide()"></i>
+        <p-overlayPanel #opEli [dismissable]="false">
+          <div style="width:500px;" class="overlay">
+            <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                If applicable, provide here the European Legislation Identifier (ELI) of the national legislative instrument.
+              </span>
+            </p>
+            <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+                   style='background:#D9D9D9;border-collapse:collapse;border:none'>
+              <tr>
+                <td width=614 valign=top style='width:460.25pt;border:solid windowtext 1.0pt;
+                              padding:0cm 5.4pt 0cm 5.4pt'>
+                  <p class=MsoNormal style='margin-top:3.0pt;margin-right:0cm;margin-bottom:
+                              0cm;margin-left:0cm;margin-bottom:3.0pt;line-height:normal'>
+                    <b>
+                      <i>
+                        <span lang=EN-US style='font-size:9.0pt'>Note: </span>
+                      </i>
+                    </b><span lang=EN-US style='font-size:9.0pt'><i>ELI shall be used to identify the national legislative instrument only when the respective country has introduced the ELI standard (e.g., France has introduced ELI for legislative instruments published over the past few years).</i></span>
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </p-overlayPanel>
+      </label>
+      <input type="text" pInputText id="eli" name="eli" [(ngModel)]="model.eli" class="form-control"
+             #eli="ngModel" autocomplete="off" [readOnly]="!editable">
+    </div>
+    <div class="form-group">
+      <label for="publReference">
+        Publication reference<span class="star-red">*</span>
+        <i class="pi pi-info-circle" (mouseenter)="opPublRef.show($event)" (mouseleave)="opPublRef.hide()"></i>
+        <p-overlayPanel #opPublRef [dismissable]="false">
+          <div style="width:500px;" class="overlay">
+            <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Provide here a reference to the publication of the national legislative instrument in the Official Journal of the respective EU Member State. The syntax of the reference should comply with the national rules for such type of references.
+              </span>
+            </p>
+            <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+                   style='background:#D9D9D9;border-collapse:collapse;border:none'>
+              <tr>
+                <td width=614 valign=top style='width:460.25pt;border:solid windowtext 1.0pt;
+                              padding:0cm 5.4pt 0cm 5.4pt'>
+                  <p class=MsoNormal style='margin-top:3.0pt;margin-right:0cm;margin-bottom:
+                              0cm;margin-left:0cm;margin-bottom:3.0pt;line-height:normal'>
+                    <b>
+                      <i>
+                        <span lang=EN-US style='font-size:9.0pt'>Example: </span>
+                      </i>
+                    </b><span lang=EN-US style='font-size:9.0pt'><i>BGBl. I 2008, 2044 – 2045</i></span>
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </p-overlayPanel>
+      </label>
+      <input type="text" pInputText id="publReference" name="publReference" [(ngModel)]="model.publReference"
+             class="form-control" [readOnly]="!editable"
+             #publReference="ngModel" autocomplete="off">
+      <!--      <div *ngIf="submitted && publReference.invalid" class="alert alert-danger">-->
+      <!--        <div *ngIf="publReference.errors.required">-->
+      <!--          Publication reference is required.-->
+      <!--        </div>-->
+      <!--      </div>-->
+    </div>
+    <div class="row">
+      <div class="col-sm-3 form-group">
+        <label for="dateOfDocument">Date of document<span class="star-red">*</span>
+          <i class="pi pi-info-circle" (mouseenter)="opDateOfDoc.show($event)" (mouseleave)="opDateOfDoc.hide()"></i>
+          <p-overlayPanel #opDateOfDoc [dismissable]="false" [appendTo]="'body'">
+            <div style="width:500px;" class="overlay">
+              <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Use the calendar button or type the date on which the national legislator has adopted the national legislative instrument. The predefined format is DD/MM/YYYY.
+              </span>
+              </p>
+              <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+                     style='background:#D9D9D9;border-collapse:collapse;border:none'>
+                <tr>
+                  <td width=614 valign=top style='width:460.25pt;border:solid windowtext 1.0pt;
+                              padding:0cm 5.4pt 0cm 5.4pt'>
+                    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0cm;margin-bottom:
+                              0cm;margin-left:0cm;margin-bottom:3.0pt;line-height:normal'>
+                      <b>
+                        <i>
+                          <span lang=EN-US style='font-size:9.0pt'>Note: </span>
+                        </i>
+                      </b><span lang=EN-US style='font-size:9.0pt'><i>This field is defined for the date of adoption of the act. The date on which the act was published must be completed in the next field - Date of Publication.</i></span>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </p-overlayPanel>
+        </label>
+        <p-calendar id="dateOfDocument" name="dateOfDocument" [(ngModel)]="model.dateOfDocument" dateFormat="dd.mm.yy"
+                    [style]="{'width':'350px'}" #dateOfDocument="ngModel" required [yearNavigator]="true"
+                    yearRange="1950:2025" [showIcon]="true"
+                    [monthNavigator]="true" [disabled]="!editable"></p-calendar>
+        <!--        <div *ngIf="submitted && dateOfDocument.invalid" class="alert alert-danger">-->
+        <!--          <div *ngIf="dateOfDocument.errors.required">-->
+        <!--            Date of document is required.-->
+        <!--          </div>-->
+        <!--        </div>-->
+      </div>
+      <div class="col-sm-3 form-group">
+        <label for="dateOfPublication">Date of publication<span class="star-red">*</span>
+          <i class="pi pi-info-circle" (mouseenter)="opDateOfPubl.show($event)" (mouseleave)="opDateOfPubl.hide()"></i>
+          <p-overlayPanel #opDateOfPubl [dismissable]="false" [appendTo]="'body'">
+            <div style="width:500px;" class="overlay">
+              <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Use the calendar button or type the date on which the national legislative instrument has been published in the Official Journal of the respective EU Member State.
+              </span>
+              </p>
+            </div>
+          </p-overlayPanel>
+        </label>
+        <p-calendar id="dateOfPublication" name="dateOfPublication" [(ngModel)]="model.dateOfPublication"
+                    dateFormat="dd.mm.yy" [showIcon]="true"
+                    [style]="{'width':'350px'}" #dateOfPublication="ngModel" required [yearNavigator]="true"
+                    yearRange="1950:2025" [disabled]="!editable"
+                    [monthNavigator]="true"></p-calendar>
+        <!--        <div *ngIf="submitted && dateOfPublication.invalid" class="alert alert-danger">-->
+        <!--          <div *ngIf="dateOfPublication.errors.required">-->
+        <!--            Date of publication is required.-->
+        <!--          </div>-->
+        <!--        </div>-->
+      </div>
+      <div class="col-sm-3 form-group">
+        <label for="dateOfEffect">Date of effect<span class="star-red">*</span>
+          <i class="pi pi-info-circle" (mouseenter)="opDateOfEffect.show($event)"
+             (mouseleave)="opDateOfEffect.hide()"></i>
+          <p-overlayPanel #opDateOfEffect [dismissable]="false" [appendTo]="'body'">
+            <div style="width:500px;" class="overlay">
+              <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Use the calendar button or type the date on which the national legislative instrument has entered into force.
+              </span>
+              </p>
+            </div>
+          </p-overlayPanel>
+        </label>
+        <p-calendar id="dateOfEffect" name="dateOfEffect" [(ngModel)]="model.dateOfEffect" dateFormat="dd.mm.yy"
+                    [style]="{'width':'350px'}" #dateOfEffect="ngModel" required [yearNavigator]="true"
+                    yearRange="1950:2025" [showIcon]="true" [disabled]="!editable"
+                    [monthNavigator]="true"></p-calendar>
+        <!--        <div *ngIf="submitted && dateOfEffect.invalid" class="alert alert-danger">-->
+        <!--          <div *ngIf="dateOfEffect.errors.required">-->
+        <!--            Date of effect is required.-->
+        <!--          </div>-->
+        <!--        </div>-->
+      </div>
+      <div class="col-sm-3 form-group">
+        <label for="dateEndValidity">Date of end of validity
+          <i class="pi pi-info-circle" (mouseenter)="opDateOfEnd.show($event)" (mouseleave)="opDateOfEnd.hide()"></i>
+          <p-overlayPanel #opDateOfEnd [dismissable]="false" [appendTo]="'body'">
+            <div style="width:500px;" class="overlay">
+              <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Use the calendar button or type the date on which the national legislative instrument was or will be no longer in force (if such date is known).
+              </span>
+              </p>
+              <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+                     style='background:#D9D9D9;border-collapse:collapse;border:none'>
+                <tr>
+                  <td width=614 valign=top style='width:460.25pt;border:solid windowtext 1.0pt;
+                              padding:0cm 5.4pt 0cm 5.4pt'>
+                    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0cm;margin-bottom:
+                              0cm;margin-left:0cm;margin-bottom:3.0pt;line-height:normal'>
+                      <b>
+                        <i>
+                          <span lang=EN-US style='font-size:9.0pt'>Note: </span>
+                        </i>
+                      </b><span lang=EN-US
+                                style='font-size:9.0pt'><i>In most cases, this field will not be completed.</i></span>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </p-overlayPanel>
+        </label>
+        <p-calendar id="dateEndValidity" name="dateEndValidity" [(ngModel)]="model.dateEndValidity"
+                    dateFormat="dd.mm.yy" [disabled]="!editable"
+                    [style]="{'width':'350px'}" #dateEndValidity="ngModel" required [yearNavigator]="true"
+                    yearRange="1950:2025" [showIcon]="true"
+                    [monthNavigator]="true"></p-calendar>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-5">
+        <label for="sourceName">
+          Source name<span class="star-red">*</span>
+          <i class="pi pi-info-circle" (mouseenter)="opSourceName.show($event)" (mouseleave)="opSourceName.hide()"></i>
+          <p-overlayPanel #opSourceName [dismissable]="false" [appendTo]="'body'">
+            <div style="width:500px;" class="overlay">
+              <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:0.0pt'>
+              <span lang=EN-US>
+                Enter the name of the source (in the national language), that has published the national legislative instrument. That might be the name of the Official Journal or another publisher on which website (portal, database) the text of the act is published.
+              </span>
+              </p>
+              <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Whenever possible, the source should be publicly accessible.
+              </span>
+              </p>
+              <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+                     style='background:#D9D9D9;border-collapse:collapse;border:none'>
+                <tr>
+                  <td width=614 valign=top style='width:460.25pt;border:solid windowtext 1.0pt;
+                              padding:0cm 5.4pt 0cm 5.4pt'>
+                    <p class=MsoNormal style='margin-top:3.0pt;margin-right:0cm;margin-bottom:
+                              0cm;margin-left:0cm;margin-bottom:3.0pt;line-height:normal'>
+                      <b>
+                        <i>
+                          <span lang=EN-US style='font-size:9.0pt'>Examples: </span>
+                        </i>
+                      </b><span lang=EN-US style='font-size:9.0pt'><i>Gesetze im Internet; Légifrance; Rechtsinformationssystem (RIS), Gazzetta Ufficiale, etc.</i></span>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </p-overlayPanel>
+        </label>
+        <p-autoComplete id="sourceName" name="sourceName" [(ngModel)]="model.sourceName"
+                        [suggestions]="sourceSuggestionsFiltered"
+                        [size]="50" [minLength]="1" [dropdown]="true" (completeMethod)="filterSources($event)" required
+                        [disabled]="!editable">
+          <ng-template let-source pTemplate="item">
+            <div class="ui-helper-clearfix">
+              {{source}}
+            </div>
+          </ng-template>
+        </p-autoComplete>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">Version
+        <i class="pi pi-info-circle" (mouseenter)="opVersion.show($event)" (mouseleave)="opVersion.hide()"></i>
+        <p-overlayPanel #opVersion [dismissable]="false" [appendTo]="'body'">
+          <div style="width:500px;" class="overlay">
+            <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:0.0pt'>
+              <span lang=EN-US>
+                Select from the drop-down list:
+              </span>
+            </p>
+            <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US style="margin-left:10.0pt">
+                <b>•</b>&nbsp;&nbsp;<i>Basic version</i> – if the uploaded act is the initial version of the national legislative instrument as adopted by the legislator, or
+              </span>
+            </p>
+            <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US style="margin-left:10.0pt">
+                <b>•</b>&nbsp;&nbsp;<i>Latest consolidated version</i> – if the uploaded act integrates all successive amendments into its text.
+              </span>
+            </p>
+            <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:0.0pt'>
+              <span lang=EN-US>
+                Whenever possible, the CrossJustice editor should provide the latest consolidated version of the national legislative instrument.
+              </span>
+            </p>
+          </div>
+        </p-overlayPanel>
+      </label>
+      <p-card>
+        <div class="row">
+          <div class="form-group col-sm-4">
+            <label for="actType">
+              Version type<span class="star-red">*</span>
+            </label>
+            <p-dropdown [options]="versions" id="version" name="version" [(ngModel)]="model.version"
+                        placeholder="Select version" optionLabel="label" [showClear]="false"
+                        [style]="{'width':'300px'}" [readonly]="!editable"
+                        required="true" #version="ngModel"></p-dropdown>
+            <!--            <div *ngIf="submitted && version.invalid" class="alert alert-danger">-->
+            <!--              <div *ngIf="version.errors.required">-->
+            <!--                Version is required.-->
+            <!--              </div>-->
+            <!--            </div>-->
+          </div>
+          <div class="col-sm-4 form-group">
+            <label for="versionDateOfEffect">Date of effect of the consolidated version
+              <i class="pi pi-info-circle" (mouseenter)="opVersionDateOfEffect.show($event)"
+                 (mouseleave)="opVersionDateOfEffect.hide()"></i>
+              <p-overlayPanel #opVersionDateOfEffect [dismissable]="false" [appendTo]="'body'">
+                <div style="width:500px;" class="overlay">
+                  <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:0.0pt'>
+              <span lang=EN-US>
+                This field becomes active when Latest consolidated version is selected. Тhe editor should enter here the date from which this consolidated version is effective.
+              </span>
+                  </p>
+                </div>
+              </p-overlayPanel>
+            </label>
+            <p-calendar id="versionDateOfEffect" name="versionDateOfEffect"
+                        [(ngModel)]="model.consolidatedVersionDateOfEffect"
+                        dateFormat="dd.mm.yy"
+                        [style]="{'width':'350px'}" #versionDateOfEffect="ngModel" required [yearNavigator]="true"
+                        yearRange="1950:2025" [showIcon]="true" [disabled]="!editable || model.version?.code !== 'L'"
+                        [monthNavigator]="true"></p-calendar>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-sm">
+            <label for="editorVersionComment">
+              Editor comment
+              <i class="pi pi-info-circle" (mouseenter)="opEditorComment.show($event)"
+                 (mouseleave)="opEditorComment.hide()"></i>
+              <p-overlayPanel #opEditorComment [dismissable]="false" [appendTo]="'body'">
+                <div style="width:500px;" class="overlay">
+                  <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:0.0pt'>
+              <span lang=EN-US>
+                In this field, the editor can comment on the relevance of the uploaded latest consolidated version of the national legislative instrument. If there are subsequent amendments that have not been integrated in its text, the editor should indicate this fact here.
+              </span>
+                  </p>
+                </div>
+              </p-overlayPanel>
+            </label>
+            <input type="text" pInputText id="editorVersionComment" name="editorVersionComment"
+                   [(ngModel)]="model.editorVersionComment"
+                   class="form-control" [readOnly]="!editable || model.version?.code !== 'L'"
+                   #editorVersionComment="ngModel" autocomplete="off">
+          </div>
+        </div>
+      </p-card>
+    </div>
+    <div class="form-group">
+      <label for="sourceUrl">
+        Act URL
+        <i class="pi pi-info-circle" (mouseenter)="opActUrl.show($event)" (mouseleave)="opActUrl.hide()"></i>
+        <p-overlayPanel #opActUrl [dismissable]="false">
+          <div style="width:500px;" class="overlay">
+            <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Provide here the exact URL of the publication of the national legislative instrument in a publicly accessible database (when available). If for any reason such URL could not be provided, then use the next field “Act File”.
+              </span>
+            </p>
+            <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+                   style='background:#D9D9D9;border-collapse:collapse;border:none'>
+              <tr>
+                <td width=614 valign=top style='width:460.25pt;border:solid windowtext 1.0pt;
+                              padding:0cm 5.4pt 0cm 5.4pt'>
+                  <p class=MsoNormal style='margin-top:3.0pt;margin-right:0cm;margin-bottom:
+                              0cm;margin-left:0cm;margin-bottom:3.0pt;line-height:normal'>
+                    <b>
+                      <i>
+                        <span lang=EN-US style='font-size:9.0pt'>Note: </span>
+                      </i>
+                    </b><span lang=EN-US style='font-size:9.0pt'><i>After pasting the link, check with the "Open" button if the link is working properly.</i></span>
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </p-overlayPanel>
+      </label>
+      <div class="ui-inputgroup">
+        <input type="text" pInputText class="form-control" id="sourceUrl" name="sourceUrl" [(ngModel)]="model.actUrl"
+               required autocomplete="off" [readOnly]="!editable">
+        <button pButton type="button" (click)="previewUrl(model.actUrl)" [disabled]="!editable && !model.actUrl"
+                label="Open"></button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="actFile">
+        Act file
+        <i class="pi pi-info-circle" (mouseenter)="opActFile.show($event)" (mouseleave)="opActFile.hide()"></i>
+        <p-overlayPanel #opActFile [dismissable]="false">
+          <div style="width:500px;" class="overlay">
+            <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Upload a file with the text of the national legislative instrument, if for any reason URL cannot be provided. The file should be in machine-readable format, preferably DOCX or PDF.
+              </span>
+            </p>
+          </div>
+        </p-overlayPanel>
+      </label>
+      <p-fileUpload name="actFile" [showCancelButton]="false" [showUploadButton]="false" (onRemove)="removeFile($event)"
+                    maxFileSize="10000000" [customUpload]="true" (uploadHandler)="onUpload($event, false)" [auto]="true"
+                    [files]="files" [disabled]="!editable">
+        <ng-template pTemplate="file">
+          <div class="ui-fileupload-row" *ngIf="model.actFile">
+            <div (click)="getFile(false)" class="link">{{model.actFile}}</div>
+            <div>
+              <button type="button" icon="pi pi-times" pButton (click)="removeFile($event)" *ngIf="editable"></button>
+            </div>
+          </div>
+        </ng-template>
+      </p-fileUpload>
+    </div>
+    <div class="form-group">
+      <label for="">Translation in English</label>
+      <p-card>
+        <div class="form-group">
+          <label for="translatedSourceUrl">
+            Translated act URL
+            <i class="pi pi-info-circle" (mouseenter)="opTransActUrl.show($event)"
+               (mouseleave)="opTransActUrl.hide()"></i>
+            <p-overlayPanel #opTransActUrl [dismissable]="false">
+              <div style="width:500px;" class="overlay">
+                <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                When available, provide here a link to the translation in English of the national legislative instrument. If for any reason such URL could not be provided, then use the next field “Translated act file”.
+              </span>
+                </p>
+                <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+                       style='background:#D9D9D9;border-collapse:collapse;border:none'>
+                  <tr>
+                    <td width=614 valign=top style='width:460.25pt;border:solid windowtext 1.0pt;
+                              padding:0cm 5.4pt 0cm 5.4pt'>
+                      <p class=MsoNormal style='margin-top:3.0pt;margin-right:0cm;margin-bottom:
+                              0cm;margin-left:0cm;margin-bottom:3.0pt;line-height:normal'>
+                        <b>
+                          <i>
+                            <span lang=EN-US style='font-size:9.0pt'>Note: </span>
+                          </i>
+                        </b><span lang=EN-US style='font-size:9.0pt'><i>After pasting the link, check with the "Open" button if the link is working properly.</i></span>
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </p-overlayPanel>
+          </label>
+          <div class="ui-inputgroup">
+            <input type="text" pInputText class="form-control" id="translatedSourceUrl" name="translatedSourceUrl"
+                   [(ngModel)]="model.translatedActUrl"
+                   required autocomplete="off" [readOnly]="!editable">
+            <button pButton type="button" (click)="previewUrl(model.translatedActUrl)"
+                    [disabled]="!editable && !model.translatedActUrl" label="Open"></button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="translatedActFile">
+            Translated act file
+            <i class="pi pi-info-circle" (mouseenter)="opTransActFile.show($event)"
+               (mouseleave)="opTransActFile.hide()"></i>
+            <p-overlayPanel #opTransActFile [dismissable]="false">
+              <div style="width:500px;" class="overlay">
+                <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Upload a file with the translated text of the national legislative instrument, if for any reason URL cannot be provided. The file should be in machine-readable format, preferably DOCX or PDF.
+              </span>
+                </p>
+              </div>
+            </p-overlayPanel>
+          </label>
+          <p-fileUpload name="translatedActFile" [showCancelButton]="false" [showUploadButton]="false"
+                        (onRemove)="removeTranslatedFile($event)"
+                        maxFileSize="10000000" [customUpload]="true" (uploadHandler)="onUpload($event, true)"
+                        [auto]="true"
+                        [files]="translatedFiles" [disabled]="!editable">
+            <ng-template pTemplate="file">
+              <div class="ui-fileupload-row" *ngIf="model.translatedActFile">
+                <div (click)="getFile(true)" class="link">{{model.translatedActFile}}</div>
+                <div>
+                  <button type="button" icon="pi pi-times" pButton (click)="removeTranslatedFile($event)"
+                          *ngIf="editable"></button>
+                </div>
+              </div>
+            </ng-template>
+          </p-fileUpload>
+        </div>
+        <div class="form-group">
+          <label for="translation-source">Translation source type
+            <i class="pi pi-info-circle" (mouseenter)="opTransSourceType.show($event)"
+               (mouseleave)="opTransSourceType.hide()"></i>
+            <p-overlayPanel #opTransSourceType [dismissable]="false">
+              <div style="width:500px;" class="overlay">
+                <p class=MsoNormal style='margin-top:6.0pt;margin-right:0cm;margin-bottom:0cm;
+                            margin-left:0cm;margin-bottom:6.0pt'>
+              <span lang=EN-US>
+                Select an option from the drop-down list depending on whether the version is official.
+              </span>
+                </p>
+                <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+                       style='background:#D9D9D9;border-collapse:collapse;border:none'>
+                  <tr>
+                    <td width=614 valign=top style='width:460.25pt;border:solid windowtext 1.0pt;
+                              padding:0cm 5.4pt 0cm 5.4pt'>
+                      <p class=MsoNormal style='margin-top:3.0pt;margin-right:0cm;margin-bottom:
+                              0cm;margin-left:0cm;margin-bottom:3.0pt;line-height:normal'>
+                        <b>
+                          <i>
+                            <span lang=EN-US style='font-size:9.0pt'>Note: </span>
+                          </i>
+                        </b><span lang=EN-US style='font-size:9.0pt'><i>“Official" means a translation made by a governmental institution from the respective EU Member State. "Unofficial" option shall be selected, if the uploaded translation is not done by an official institution, and "CrossJustice Editor" option – if the act has been translated by a representative of the organisation to which the editor belongs.</i></span>
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </p-overlayPanel>
+          </label>
+          <p-dropdown [options]="transTypes" [(ngModel)]="model.translationSource" id="translation-source"
+                      optionLabel="label" [disabled]="!model.translatedActUrl && !model.translatedActFile"
+                      name="translation-source"
+                      class="select-transp"></p-dropdown>
+        </div>
+      </p-card>
+    </div>
+
+    <div class="form-group" style="border-top: 1px solid gray;" *ngIf="editable">
+      <p></p>
+      <span style="padding:10px 20px 0px 0px;">
+        <p-button type="button" icon="pi pi-save" label="Save"
+                  (click)="submitForm(false)"></p-button>
+      </span>
+      <span style="padding:10px 20px 0px 100px;">
+        <p-button type="button" icon="pi pi-check" label="Save and close"
+                  (click)="submitForm(true)"></p-button>
+      </span>
+    </div>
+    <p></p>
+  </form>
+</div>

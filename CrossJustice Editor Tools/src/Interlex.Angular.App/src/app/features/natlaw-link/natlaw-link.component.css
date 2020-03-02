@@ -1,0 +1,9 @@
+.bold {
+  font-weight: bold;
+}
+
+.cb{
+  text-align: center;
+  font-weight: bold;
+  padding: 5px;
+}

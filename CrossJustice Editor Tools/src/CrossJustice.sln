@@ -1,0 +1,69 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrossJustice", "Interlex\CrossJustice.csproj", "{7EC50473-40FF-46B7-AB90-A186FFA83DCF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrossJustice.Models", "Interlex.Models\CrossJustice.Models.csproj", "{75E3E33E-2EF6-4232-833F-6FD5AF78141F}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "CrossJustice.Angular.App", "Interlex.Angular.App\CrossJustice.Angular.App.njsproj", "{6C4F65D9-B32B-422B-B345-C74130CEC25F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrossJustice.Data", "Interlex.Data\CrossJustice.Data.csproj", "{ADB8E811-11C3-4303-9A11-300C23B7854A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossJustice.DirectivesHelper", "CrossJustice.DirectivesHelper\CrossJustice.DirectivesHelper.csproj", "{298A1A13-FB64-46F5-963D-6BB8E624533F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7EC50473-40FF-46B7-AB90-A186FFA83DCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EC50473-40FF-46B7-AB90-A186FFA83DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EC50473-40FF-46B7-AB90-A186FFA83DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EC50473-40FF-46B7-AB90-A186FFA83DCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75E3E33E-2EF6-4232-833F-6FD5AF78141F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75E3E33E-2EF6-4232-833F-6FD5AF78141F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75E3E33E-2EF6-4232-833F-6FD5AF78141F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75E3E33E-2EF6-4232-833F-6FD5AF78141F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C4F65D9-B32B-422B-B345-C74130CEC25F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C4F65D9-B32B-422B-B345-C74130CEC25F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C4F65D9-B32B-422B-B345-C74130CEC25F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADB8E811-11C3-4303-9A11-300C23B7854A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADB8E811-11C3-4303-9A11-300C23B7854A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADB8E811-11C3-4303-9A11-300C23B7854A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADB8E811-11C3-4303-9A11-300C23B7854A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{298A1A13-FB64-46F5-963D-6BB8E624533F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{298A1A13-FB64-46F5-963D-6BB8E624533F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{298A1A13-FB64-46F5-963D-6BB8E624533F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{298A1A13-FB64-46F5-963D-6BB8E624533F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D39F5A94-B517-4BB8-902C-273457B161C1}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://192.168.2.19:8080/tfs/apiscollection
+		SccProjectUniqueName0 = Interlex.Angular.App\\CrossJustice.Angular.App.njsproj
+		SccProjectName0 = Interlex.Angular.App
+		SccLocalPath0 = Interlex.Angular.App
+		SccProjectUniqueName1 = Interlex\\CrossJustice.csproj
+		SccProjectName1 = Interlex
+		SccLocalPath1 = Interlex
+		SccProjectUniqueName2 = Interlex.Data\\CrossJustice.Data.csproj
+		SccProjectName2 = Interlex.Data
+		SccLocalPath2 = Interlex.Data
+		SccProjectUniqueName3 = Interlex.Models\\CrossJustice.Models.csproj
+		SccProjectName3 = Interlex.Models
+		SccLocalPath3 = Interlex.Models
+		SccLocalPath4 = .
+		SccProjectUniqueName5 = CrossJustice.DirectivesHelper\\CrossJustice.DirectivesHelper.csproj
+		SccProjectName5 = CrossJustice.DirectivesHelper
+		SccLocalPath5 = CrossJustice.DirectivesHelper
+	EndGlobalSection
+EndGlobal

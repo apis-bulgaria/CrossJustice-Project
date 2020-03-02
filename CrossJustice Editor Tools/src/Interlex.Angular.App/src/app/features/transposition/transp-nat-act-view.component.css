@@ -1,0 +1,160 @@
+.ui-panel-titlebar{
+    background: lightgray;
+}
+.label-inline {
+    display: inline;
+    padding: 0;
+    padding-top: 12px;
+    margin: 0;
+}
+/* .link {
+    cursor: pointer;
+} */
+
+.dd-left-padding{
+    margin-left: 10px;
+}
+
+::ng-deep .select-transp > .ui-dropdown{
+    border: 1px solid #a6a6a6;
+    width: 250px;
+}
+
+::ng-deep .select-transp .ui-dropdown .ui-dropdown-label{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+::ng-deep .select-transp .ui-inputtext{
+  padding: .2em .5em;
+}
+
+th{
+  background: #b3dace;
+  color: #5c6f79;
+  border-bottom: 2px solid #7b95a3;
+  display: flex;
+}
+
+.transp-td > tr{
+  padding-top: 10px;
+}
+
+::ng-deep .natAct-box .ui-card > .ui-card-body {
+    padding: 0 .5em .5em;
+}
+
+.add-provision-btn-box{
+  padding: 0 .5em;
+}
+.add-provision-btn{
+  background: #fff;
+  color: #009688;
+  border: 0 none;
+}
+
+.add-provision-btn:enabled:hover{
+    background-color: #fff;
+    color: #617c8a;
+    border: #ffffff;
+}
+
+.add-btn,
+.comment-btn{
+    background: #fafafa;
+    color: #CA7957;
+    border: 1px solid #c8c8c8;
+    width: 2.357em;
+    height: 2.357em;
+}
+
+.remove-btn{
+  background: #fafafa;
+  color: #757575;
+  border: 1px solid #c8c8c8;
+  width: 2.357em;
+  height: 2.357em;
+}
+
+.list-act-provision{
+  list-style: none;
+}
+.natAct-list{
+  margin-bottom: 2px;
+}
+.prov-box{
+  justify-content: space-between;
+  display: flex;
+  border-bottom: 1px solid #eee;
+}
+
+.prov-box label{
+    text-decoration: none;
+     color: #CA7957;
+}
+.natAct-edit-btns{
+    justify-content: flex-end;
+    display: flex;
+}
+
+.textEn-box{
+  display: flex;
+  text-align: justify;
+  color: #000000;
+}
+.text-arrow-box{
+  margin-right: 5px;
+}
+
+.pi-chevron-down{
+  margin-top: 5px;
+}
+
+.comment-text{
+  color: #009688;
+  font-style: italic;
+  text-align: justify;
+}
+.comment-text span{
+    color: #666666;
+}
+
+::ng-deep .edit-provision-comp > .add-edit-provision-box{
+  justify-content: space-between;
+  display: flex;
+  width: 100%;
+}
+
+::ng-deep .edit-provision-comp .edit-provision-grup{
+  padding: 0;
+}
+::ng-deep .edit-provision-comp > .add-edit-provision-box .edit-provision-grup,
+::ng-deep .edit-provision-comp  .input-edit-provision{
+  width: 100%;
+}
+::ng-deep .edit-provision-comp .edit-provision-dropdown > .ui-dropdown{
+  width: 98%;
+}
+
+
+::ng-deep .edit-provision-comp .textEn-box,
+::ng-deep .edit-provision-comp .authorComment-box{
+  height: 220px;
+}
+
+/*::ng-deep p-dialog .ui-dialog {*/
+/*  overflow: scroll;*/
+/*  max-height: 70%;*/
+/*}*/
+
+.comment-button {
+  background: none!important;
+  padding: 0!important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+}

@@ -1,0 +1,7 @@
+<app-alert></app-alert>
+
+<app-navigation></app-navigation>
+
+<div [@routeAnimations]="prepareRoute(outlet)" [className]="isIExplorer ? 'container-page-IE' : 'container-page'">
+  <router-outlet #outlet="outlet"></router-outlet>
+</div>

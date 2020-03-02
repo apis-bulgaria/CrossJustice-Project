@@ -1,0 +1,12 @@
+<table [style]="{'width':'100%'}">
+  <tr *ngFor="let item of euLink.itemsBase; index as i">
+    <td>{{item.label}}</td>
+    <td>
+      <div><input type="text" [(ngModel)]="item.value" title="E.g.: {{item.placeholder}}"/></div>
+    </td>
+    <!-- <td *ngIf="euLink.itemsOther.length > i">{{euLink.itemsOther[i].label}}</td> -->
+    <!-- <td *ngIf="euLink.itemsOther.length > i"><input type="text" [(ngModel)]="euLink.itemsOther[i].value"
+            class="inputPart" title="E.g.: {{euLink.itemsOther[i].placeholder}}" />
+    </td> -->
+  </tr>
+</table>

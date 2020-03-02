@@ -1,0 +1,38 @@
+<p-menubar [model]="items" *ngIf="loggedIn"  [className]="isIE ? 'header-menu-IE' : 'header-menu'">
+
+  <div class="header-rightpart">
+    <div class="header logo-box">
+      <img src="assets/logo.png" alt="interlex-logo">
+      <h3>CrossJustice Editor</h3>
+    </div>
+
+     <div class="user-settings-box">
+
+      <!-- User Settings -->
+      <div class="mobile-user-settings">
+        <p-menu #menu [popup]="true" [model]="buttonItems" class="mobile-user-menu"></p-menu>
+        <button type="button" pButton icon="pi pi-user" (click)="menu.toggle($event)"></button>
+      </div>
+
+    </div>
+  </div>
+</p-menubar>
+
+
+
+<!--<p-toolbar>-->
+<!--<div class="ui-toolbar-group-left">-->
+<!--<button pButton type="button" label="New" icon="pi pi-plus"></button>-->
+<!--<button pButton type="button" label="Upload" icon="pi pi-upload" class="ui-button-success"></button>-->
+
+<!--<i class="pi pi-bars"></i>-->
+
+<!--<p-splitButton label="Save" icon="pi pi-check" [model]="items" styleClass="ui-button-warning"></p-splitButton>-->
+<!--</div>-->
+
+<!--<div class="ui-toolbar-group-right">-->
+<!--<button pButton type="button" icon="pi pi-search"></button>-->
+<!--<button pButton type="button" icon="pi pi-calendar" class="ui-button-success"></button>-->
+<!--<button pButton type="button" icon="pi pi-times" class="ui-button-danger"></button>-->
+<!--</div>-->
+<!--</p-toolbar>-->

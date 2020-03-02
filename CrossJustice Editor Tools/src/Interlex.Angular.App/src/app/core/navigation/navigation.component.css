@@ -1,0 +1,16 @@
+img {
+  width: 85px;
+}
+
+h3 {
+  display: inline;
+  vertical-align: middle;
+  font-family: Georgia, Times New Roman, serif;
+}
+
+::ng-deep .ui-menu {
+    display: inline-table;
+    width: auto;
+    min-width: 12.5em;
+   /* margin-left: -5px !important;*/
+}

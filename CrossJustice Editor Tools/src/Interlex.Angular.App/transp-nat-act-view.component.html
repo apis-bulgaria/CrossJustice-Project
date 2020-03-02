@@ -1,0 +1,24 @@
+<p-panel *ngIf="natAct">
+    <p-header>
+        <div class="ui-helper-clearfix">
+            <span class="ui-panel-title"
+                style="font-size:16px;display:inline-block;margin-top:2px">{{natAct.title}}</span>
+            <p-button icon="pi pi-minus" iconPos="left" [style]="{'float':'right'}"
+                class="ui-button-rounded ui-button-danger">
+            </p-button>
+            <p-button label="Add Provision" (onClick)="showProvision()" [style]="{'float':'right'}"></p-button>
+        </div>
+    </p-header>
+    <ul *ngIf="natAct.provisions">
+        <li *ngFor="let prov of natAct.provisions">
+            {{prov.link|natlinkPart}}
+        </li>
+    </ul>
+</p-panel>
+<p-dialog header="Add provision" [(visible)]="provisionVisible" [style]="{width: '700px'}"
+    [contentStyle]="{'overflow':'visible', 'height':'700px', 'max-height':'700px'}">
+    <transp-provision [Provision]="tmpProvision"> </transp-provision>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="saveProvision()" label="Save"></button>
+    </p-footer>
+</p-dialog>

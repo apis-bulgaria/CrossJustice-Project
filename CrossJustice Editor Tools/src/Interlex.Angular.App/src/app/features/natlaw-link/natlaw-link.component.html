@@ -1,0 +1,47 @@
+<label class="bold">Title of the national legal instrument</label><span class="star-red">*</span>
+<div>
+  <p-dropdown [options]="legislationDropdown" [(ngModel)]="legislationSelected"
+              placeholder="Select or enter legislation" [style]="{'width':'666px'}"
+              optionLabel="title" [showClear]="true" editable="true"
+              (onChange)="legislationChange($event,false)"></p-dropdown>
+</div>
+<label class="bold">Title in English</label><span class="star-red">*</span>
+<div>
+  <p-dropdown [options]="legislationDropdown" [(ngModel)]="legislationSelectedEn"
+              placeholder="Select or enter legislation" [style]="{'width':'666px'}"
+              optionLabel="titleEn" [showClear]="true" editable="true"
+              (onChange)="legislationChange($event, true)"></p-dropdown>
+</div>
+<br>
+<label for="lawLink" class="bold">Link to the national legal instrument</label>
+<input type="text" pInputText class="form-control" required id="lawLink" [(ngModel)]="_currentItem.url">
+<label for="lawEli" class="bold">ELI</label>
+<input type="text" pInputText class="form-control" required id="lawEli" [(ngModel)]="_currentItem.eli">
+<div *ngIf="showAdvanced">
+  <table [style]="{'width':'100%'}">
+    <tr>
+      <td colspan="2" class="cb">Cited Provisions</td>
+      <td colspan="2" class="cb">Citation to other <br/>structural elements</td>
+    </tr>
+    <tr *ngFor="let item of _currentItem?.itemsBase; index as i">
+      <td>{{item.label}}</td>
+      <td>
+        <div><input type="text" [(ngModel)]="item.value" title="E.g.: {{item.placeholder}}"/></div>
+      </td>
+      <td *ngIf="_currentItem.itemsOther.length > i">{{_currentItem.itemsOther[i].label}}</td>
+      <td *ngIf="_currentItem.itemsOther.length > i"><input type="text"
+                                                           [(ngModel)]="_currentItem.itemsOther[i].value"
+                                                           class="inputPart"
+                                                           title="E.g.: {{_currentItem.itemsOther[i].placeholder}}"/>
+      </td>
+    </tr>
+  </table>
+  <div *ngIf="checkSelectedTypes(legislationSelected, legislationSelectedEn)">
+    <label for="include" class="bold">Include this act in the list of national legal instruments in Section
+      "Legislation"</label>
+    <div>
+      <p-checkbox [(ngModel)]="_currentItem.include" binary="true" id="include"></p-checkbox>
+    </div>
+  </div>
+</div>
+
